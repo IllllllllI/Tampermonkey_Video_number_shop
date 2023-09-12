@@ -10,14 +10,21 @@
 // @icon         https://blog.chrxw.com/favicon.ico
 // ==/UserScript==
 
-var open_url = null;    
 (() => {
     "use strict";
-    //let open_url = null;
-    if(!open_url)
-    {
-        open_url = open("https://channels.weixin.qq.com/shop/ssr/goods/list?token=2083904492");
+    // 监听键盘按下事件
+    document.addEventListener('keydown', function(event) {
+        // 判断按下的是哪个键
+        if (event.key === 'go doc start') {
+            // 执行特定的操作或功能
+            let open_url = open("https://channels.weixin.qq.com/shop/ssr/goods/list?token=2083904492");
+            console.log('按下了a键');
+        } else if (event.key === 'b') {
+            console.log('按下了b键');
     }
+    // 可以根据需要添加更多的按键映射
+  });
+  
     let btn_weui = document.querySelector("#app button.weui-desktop-btn.weui-desktop-btn_default");
     let btn_write = document.createElement("button");
     btn_write.textContent = "写入";
