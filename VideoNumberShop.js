@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         视频号脚本
 // @namespace    https://greasyfork.org/zh-CN/users/1171770-illlllllli
-// @version      0.1
+// @version      0.2
 // @description  new script
 // @author       You
 // @match        https://channels.weixin.qq.com/shop
