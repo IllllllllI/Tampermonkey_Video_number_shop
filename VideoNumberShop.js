@@ -13,5 +13,4 @@
 (() =>{
     'use strict';
     let open_url = open('https://channels.weixin.qq.com/shop/ssr/goods/list?token=2083904492');
-    console.log('list');
 })();
