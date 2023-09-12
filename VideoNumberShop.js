@@ -1,10 +1,10 @@
 // ==UserScript==
-// @name         VideoNumberShop
+// @name         视频号小店
 // @name:zh-CN   视频号小店
 // @namespace    https://blog.chrxw.com
 // @version      1.2
 // @description  快捷添加库存
-// @author       Chr_
+// @author       僵尸先生
 // @match        https://channels.weixin.qq.com/*
 // @license      AGPL-3.0
 // @icon         https://blog.chrxw.com/favicon.ico
