@@ -5,7 +5,7 @@
 // @version      1.4
 // @description  快捷添加库存
 // @author       僵尸先生
-// @match        https://channels.weixin.qq.com/shop/*
+// @match        https://channels.weixin.qq.com/*
 // @license      AGPL-3.0
 // @icon         
 // @grant GM_setValue
