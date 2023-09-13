@@ -63,7 +63,7 @@
 
     function main_click(number)
     {
-        let data = localStorage.getItem('video_number_shop_data')
+
         let input_id = document.querySelector('.ignore_default_input')
         if (input_id)
         {
@@ -116,8 +116,8 @@
         {
 
             // 打开网页
-            open(document.getElementsByName('goods')[0].appUrl)
             
+            GM_setValue('url', open(document.getElementsByName('goods')[0].appUrl))
             //open_url = open("https://channels.weixin.qq.com/shop/ssr/goods/list?token=2083904492");
             // let btn_weui = document.querySelector("#app .weui-desktop-btn_wrp")
             // btn_write = document.createElement("button")
