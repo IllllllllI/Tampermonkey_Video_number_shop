@@ -155,6 +155,10 @@
         }
         else if(event.altKey && event.keyCode >= 96 && event.keyCode <= 105)
         {
+            if(url_open === undefined)
+            {
+                alert('当前数据为空，请按Home键获取数据（打开的窗口不能关闭）')
+            }
             let number = null
             if(96 === event.keyCode)
             {
@@ -165,10 +169,6 @@
                 number = (event.keyCode - 96) * 10
             }
             main_click(number)
-        }
-        else if(event.key === 'End')
-        {
-            localStorage.removeItem('video_number_shop_data')
         }
      })
 
