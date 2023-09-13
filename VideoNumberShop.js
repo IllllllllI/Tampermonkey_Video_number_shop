@@ -142,7 +142,7 @@
             // btn_weui.insertBefore(btn_write, btn_weui.children[0])
 
         }
-        else if((event.ctrlKey && event.keyCode >= 96 && event.keyCode <= 105))
+        else if((event.shiftKey && event.keyCode >= 96 && event.keyCode <= 105))
         {
             if(url_open === undefined)
             {
