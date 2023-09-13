@@ -25,10 +25,46 @@
     let open_url = null
     let btn_write = null
 
+    function modify_inventory(input_id, number)
+    {
+        let bo = true;
+        let btn_t = setInterval(function() {
+            if (document.readyState === 'complete' && input_id.value === document.querySelectorAll('.flex')[10].children[0].textContent)
+            {
+                if(bo)
+                {
+                    document.querySelector('.icon_img').click()
+                    bo = false;
+                }
+
+                let input_inventory_all = document.querySelectorAll('.weui-desktop-form__input')
+                if (document.readyState === 'complete')
+                {
+                    setTimeout(function() {
+                        document.querySelectorAll('#app .weui-desktop-tooltip.weui-desktop-tooltip__up-left')[1].click()
+                        simulateKeyboardInput(input_inventory_all[0], number)
+                    }, 100);
+
+                    setTimeout(function() {
+                            document.querySelectorAll('#app .weui-desktop-btn.weui-desktop-btn_default')[1].click()
+                        }, 400);
+                }
+
+                setTimeout(function() {
+                    let btn_all = document.querySelectorAll('#app .weui-desktop-btn.weui-desktop-btn_primary')
+                    btn_all[1].click();
+                    btn_all[2].click();
+                }, 500);
+                clearInterval(btn_t)
+            }
+        })
+    }
+
+
     function main_click(number)
     {
         let data = localStorage.getItem('video_number_shop_data')
-        let input_id = document.querySelector('.ignore_default_input') 
+        let input_id = document.querySelector('.ignore_default_input')
         if (input_id)
         {
             input_id.select()
@@ -56,34 +92,20 @@
                 clearInterval(input_timer);
             }
         }, 200);
+        modify_inventory(input_id, number)
 
-        // 定义一个定时器
-        let bo = true;
-        let btn_t = setInterval(function() {
-            if (document.readyState === 'complete' && input_id.value === document.querySelectorAll('.flex')[10].children[0].textContent)
-            {
-                if(bo)
+        setTimeout(function() {
+            btn_all[0].click()
+
+            setTimeout(function() {
+                let temp = document.querySelectorAll('.goods_price.WeChatSansStdRegular')[1].innerText
+                if(number !== parseInt(temp))
                 {
-                    document.querySelector('.icon_img').click()
-                    bo = false;
+                    modify_inventory(input_id, number)
                 }
-                let input_inventory_all = document.querySelectorAll('.weui-desktop-form__input')
-                setTimeout(function() {
-                    document.querySelectorAll('#app .weui-desktop-tooltip.weui-desktop-tooltip__up-left')[1].click()
-                    simulateKeyboardInput(input_inventory_all[0], number)
-                    setTimeout(function() {
-                        document.querySelectorAll('#app .weui-desktop-btn.weui-desktop-btn_default')[1].click()
-                    }, 300);
-                    setTimeout(function() {
-                            let btn_all = document.querySelectorAll('#app .weui-desktop-btn.weui-desktop-btn_primary')
-                            btn_all[1].click();
-                            btn_all[2].click();
-                        }, 400);
-                }, 100);
-                    //停止定时器
-                clearInterval(btn_t)
-            }
-        }, 200);
+            }, 800);
+        }, 1500);
+
     }
 
     // 监听键盘按下事件
@@ -94,15 +116,8 @@
         {
 
             // 打开网页
-            let openedWindow = open(document.getElementsByName('goods')[0].appUrl)
-            // 监听网页加载完成事件
-            openedWindow.addEventListener('load', function() {
-            // 获取网页内容
-            let content = openedWindow.document.documentElement.innerHTML;
-
-            // 保存内容到本地存储
-            localStorage.setItem('video_number_shop_data', content);
-            });
+            open(document.getElementsByName('goods')[0].appUrl)
+            
             //open_url = open("https://channels.weixin.qq.com/shop/ssr/goods/list?token=2083904492");
             // let btn_weui = document.querySelector("#app .weui-desktop-btn_wrp")
             // btn_write = document.createElement("button")
@@ -131,7 +146,7 @@
             let number = null
             number = event.keyCode - 96
             main_click(number)
-            
+
         }
         else if(event.altKey && event.keyCode >= 96 && event.keyCode <= 105)
         {
@@ -151,7 +166,7 @@
             localStorage.removeItem('video_number_shop_data')
         }
      })
-     
+
 
 
 
