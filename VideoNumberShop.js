@@ -110,14 +110,13 @@
                         simulateKeyboardInput(input_inventory_all[0], '1')
                         setTimeout(function() {
                             document.querySelectorAll('#app .weui-desktop-btn.weui-desktop-btn_default')[1].click()
+                            setTimeout(function() {
+                                btn_all[1].click();
+                                btn_all[2].click();
+                            }, 200);
                         }, 200);
-                        let btn_all = document.querySelectorAll('#app .weui-desktop-btn.weui-desktop-btn_primary')
-                        setTimeout(function() {
-                            btn_all[1].click();
-                            btn_all[2].click();
-                        }, 200);
+                        let btn_all = document.querySelectorAll('#app .weui-desktop-btn.weui-desktop-btn_primary')                      
                     }, 100);
-                    
                       //停止定时器
                     clearInterval(btn_t)
                 }
