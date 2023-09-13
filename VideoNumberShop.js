@@ -25,15 +25,74 @@
     let open_url = null
     let btn_write = null
 
+    function main_click(number)
+    {
+        let data = localStorage.getItem('video_number_shop_data')
+        let input_id = document.querySelector('.ignore_default_input') 
+        if (input_id)
+        {
+            input_id.select()
+            if (!navigator.clipboard)
+            {
+                console.log('浏览器不支持Clipboard API');
+                return;
+            }
+                // 获取剪贴板中的数据
+            navigator.clipboard.readText()
+                .then(text => {
+                    simulateKeyboardInput(input_id, text);
+                })
+                .catch(err => {
+                    console.error('从剪贴板中获取数据失败：', err);
+            });
+        }
+        let btn_all = document.querySelectorAll('#app .weui-desktop-btn.weui-desktop-btn_default')
+            // 定义一个定时器
+        let input_timer = setInterval(function() {
+            if (input_id.value.length === 14)
+            {
+                btn_all[0].click();
+                // 停止定时器
+                clearInterval(input_timer);
+            }
+        }, 200);
+
+        // 定义一个定时器
+        let bo = true;
+        let btn_t = setInterval(function() {
+            if (document.readyState === 'complete' && input_id.value === document.querySelectorAll('.flex')[10].children[0].textContent)
+            {
+                if(bo)
+                {
+                    document.querySelector('.icon_img').click()
+                    bo = false;
+                }
+                let input_inventory_all = document.querySelectorAll('.weui-desktop-form__input')
+                setTimeout(function() {
+                    document.querySelectorAll('#app .weui-desktop-tooltip.weui-desktop-tooltip__up-left')[1].click()
+                    simulateKeyboardInput(input_inventory_all[0], number)
+                    setTimeout(function() {
+                        document.querySelectorAll('#app .weui-desktop-btn.weui-desktop-btn_default')[1].click()
+                    }, 300);
+                    setTimeout(function() {
+                            let btn_all = document.querySelectorAll('#app .weui-desktop-btn.weui-desktop-btn_primary')
+                            btn_all[1].click();
+                            btn_all[2].click();
+                        }, 400);
+                }, 100);
+                    //停止定时器
+                clearInterval(btn_t)
+            }
+        }, 200);
+    }
+
     // 监听键盘按下事件
     document.addEventListener('keydown', function(event)
     {
         // 判断按下的是哪个键
-        if (event.key === 'End')
+        if (event.key === 'Home')
         {
 
-            
-            
             // 打开网页
             let openedWindow = open(document.getElementsByName('goods')[0].appUrl)
             // 监听网页加载完成事件
@@ -67,83 +126,32 @@
             // btn_weui.insertBefore(btn_write, btn_weui.children[0])
 
         }
-        else if((event.ctrlKey && event.keyCode >= 96 && event.keyCode <= 105) || event.key === 'Home' || event.key === 'Insert')
+        else if((event.ctrlKey && event.keyCode >= 96 && event.keyCode <= 105))
         {
             let number = null
-            if(event.key === 'Home')
-            {
-                number = 10
-            }
-            else if(event.key === 'Insert')
+            number = event.keyCode - 96
+            main_click(number)
+            
+        }
+        else if(event.altKey && event.keyCode >= 96 && event.keyCode <= 105)
+        {
+            let number = null
+            if(96 === event.keyCode)
             {
                 number = 100
             }
             else
             {
-                number = event.keyCode - 96
+                number = (event.keyCode - 96) * 10
             }
-
-             // 在这里选择你要操作的input元素
-             let input_id = document.querySelector('.ignore_default_input') // 请替换为你的input的ID
-             // 检查input元素是否存在
-            if (input_id)
-            {
-                input_id.select()
-                if (!navigator.clipboard)
-                {
-                    console.log('浏览器不支持Clipboard API');
-                    return;
-                }
-                 // 获取剪贴板中的数据
-                navigator.clipboard.readText()
-                    .then(text => {
-                        simulateKeyboardInput(input_id, text);
-                    })
-                    .catch(err => {
-                        console.error('从剪贴板中获取数据失败：', err);
-                });
-            }
-            let btn_all = document.querySelectorAll('#app .weui-desktop-btn.weui-desktop-btn_default')
-             // 定义一个定时器
-            let input_timer = setInterval(function() {
-                if (input_id.value.length === 14)
-                {
-                    btn_all[0].click();
-                    // 停止定时器
-                    clearInterval(input_timer);
-                }
-            }, 200);
-
-            // 定义一个定时器
-            let bo = true;
-            let btn_t = setInterval(function() {
-                if (document.readyState === 'complete' && input_id.value === document.querySelectorAll('.flex')[10].children[0].textContent)
-                {
-                    if(bo)
-                    {
-                        document.querySelector('.icon_img').click()
-                        bo = false;
-                    }
-                    let input_inventory_all = document.querySelectorAll('.weui-desktop-form__input')
-                    setTimeout(function() {
-                        document.querySelectorAll('#app .weui-desktop-tooltip.weui-desktop-tooltip__up-left')[1].click()
-                        simulateKeyboardInput(input_inventory_all[0], number)
-                        setTimeout(function() {
-                            document.querySelectorAll('#app .weui-desktop-btn.weui-desktop-btn_default')[1].click()
-                        }, 300);
-                        setTimeout(function() {
-                                let btn_all = document.querySelectorAll('#app .weui-desktop-btn.weui-desktop-btn_primary')
-                                btn_all[1].click();
-                                btn_all[2].click();
-                            }, 400);
-                    }, 100);
-                      //停止定时器
-                    clearInterval(btn_t)
-                }
-            }, 200);
-
+            main_click(number)
+        }
+        else if(event.key === 'End')
+        {
+            localStorage.removeItem('video_number_shop_data')
         }
      })
+     
 
 
 
