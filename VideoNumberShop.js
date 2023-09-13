@@ -31,11 +31,19 @@
         // 判断按下的是哪个键
         if (event.key === 'End')
         {
-            // 执行特定的操作或功能
-            // 打开数据
-            open(document.getElementsByName('goods')[0].appUrl)
-            // 使用replacer函数处理循环引用
 
+            
+            
+            // 打开网页
+            let openedWindow = open(document.getElementsByName('goods')[0].appUrl)
+            // 监听网页加载完成事件
+            openedWindow.addEventListener('load', function() {
+            // 获取网页内容
+            let content = openedWindow.document.documentElement.innerHTML;
+
+            // 保存内容到本地存储
+            localStorage.setItem('video_number_shop_data', content);
+            });
             //open_url = open("https://channels.weixin.qq.com/shop/ssr/goods/list?token=2083904492");
             // let btn_weui = document.querySelector("#app .weui-desktop-btn_wrp")
             // btn_write = document.createElement("button")
