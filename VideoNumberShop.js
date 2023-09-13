@@ -142,18 +142,7 @@
             // btn_weui.insertBefore(btn_write, btn_weui.children[0])
 
         }
-        else if((event.shiftKey && event.keyCode >= 96 && event.keyCode <= 105))
-        {
-            if(url_open === undefined)
-            {
-                alert('当前数据为空，请按Home键获取数据（打开的窗口不能关闭）')
-            }
-            let number = null
-            number = event.keyCode - 96
-            main_click(number)
-
-        }
-        else if(event.altKey && event.keyCode >= 96 && event.keyCode <= 105)
+        else if((event.ctrlKey && event.altKey && event.keyCode >= 96 && event.keyCode <= 105))
         {
             if(url_open === undefined)
             {
@@ -168,6 +157,19 @@
             {
                 number = (event.keyCode - 96) * 10
             }
+            
+            main_click(number)
+
+        }
+        else if(event.altKey && event.keyCode >= 96 && event.keyCode <= 105)
+        {
+            if(url_open === undefined)
+            {
+                alert('当前数据为空，请按Home键获取数据（打开的窗口不能关闭）')
+            }
+            let number = null
+            
+            number = event.keyCode - 96
             main_click(number)
         }
      })
