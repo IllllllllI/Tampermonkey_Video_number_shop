@@ -2,7 +2,7 @@
 // @name         视频号小店
 // @name:zh-CN   视频号小店
 // @namespace    https://blog.chrxw.com
-// @version      1.2
+// @version      1.5
 // @description  快捷添加库存
 // @author       僵尸先生
 // @match        https://channels.weixin.qq.com/*
