@@ -2,7 +2,7 @@
 // @name         视频号小店
 // @name:zh-CN   视频号小店
 // @namespace    https://greasyfork.org/zh-CN/scripts
-// @version      1.5
+// @version      1.5.1
 // @description  快捷添加库存
 // @author       僵尸先生
 // @match        https://channels.weixin.qq.com/*
@@ -60,24 +60,28 @@
                     document.querySelector('.icon_img').click()
                     bo = false;
                 }
-                let input_inventory_all = document.querySelectorAll('.weui-desktop-form__input')
-                setTimeout(function () {
-                    document.querySelectorAll('#app .weui-desktop-tooltip.weui-desktop-tooltip__up-left')[1].click()
-                    simulateKeyboardInput(input_inventory_all[0], number)
-                    if (document.readyState === 'complete') {
-                        setTimeout(function () {
-                            document.querySelectorAll('#app .weui-desktop-btn.weui-desktop-btn_default')[1].click()
-                        }, 300);
-                        setTimeout(function () {
-                            let btn_all_all = document.querySelectorAll('#app .weui-desktop-btn.weui-desktop-btn_primary')
-                            btn_all_all[1].click();
-                            btn_all_all[2].click();
-                        }, 400);
-                    }
+                let temp_text = document.querySelector('.item-basic-spu').innerText
+                if (temp_text.slice(temp_text.indexOf('-') - 14, temp_text.indexOf('-')) === input_id.value) {
+                    let input_inventory_all = document.querySelectorAll('.weui-desktop-form__input')
+                    setTimeout(function () {
+                        document.querySelectorAll('#app .weui-desktop-tooltip.weui-desktop-tooltip__up-left')[1].click()
+                        simulateKeyboardInput(input_inventory_all[0], number)
+                        if (document.readyState === 'complete') {
+                            setTimeout(function () {
+                                document.querySelectorAll('#app .weui-desktop-btn.weui-desktop-btn_default')[1].click()
+                            }, 300);
+                            setTimeout(function () {
+                                let btn_all_all = document.querySelectorAll('#app .weui-desktop-btn.weui-desktop-btn_primary')
+                                btn_all_all[1].click();
+                                btn_all_all[2].click();
+                            }, 400);
+                        }
 
-                }, 100);
-                //停止定时器
-                clearInterval(btn_t)
+                    }, 100);
+                    //停止定时器
+                    clearInterval(btn_t)
+                }
+
             }
         }, 200);
     }
@@ -89,7 +93,6 @@
         if (event.key === 'Home') {
             // 打开数据
             open(document.getElementsByName('goods')[0].appUrl)
-
 
         }
         else if ((event.ctrlKey && event.keyCode >= 96 && event.keyCode <= 105) || (event.altKey && event.keyCode >= 96 && event.keyCode <= 105)) {
