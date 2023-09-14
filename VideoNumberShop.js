@@ -2,7 +2,7 @@
 // @name         视频号小店
 // @name:zh-CN   视频号小店
 // @namespace    https://greasyfork.org/zh-CN/scripts
-// @version      1.5.1
+// @version      1.5.2
 // @description  快捷添加库存
 // @author       僵尸先生
 // @match        https://channels.weixin.qq.com/*
@@ -103,7 +103,11 @@
         // 判断按下的是哪个键
         if (event.key === 'Home') {
             // 打开数据
-            open(document.getElementsByName('goods')[0].appUrl)
+            document.querySelectorAll('.weui-desktop-menu__name')[11].click()
+            setTimeout(function () {
+                open(document.getElementsByName('goods')[0].appUrl)
+            }, 100)
+            
 
         }
         else if ((event.ctrlKey && event.keyCode >= 96 && event.keyCode <= 105) || (event.altKey && event.keyCode >= 96 && event.keyCode <= 105)) {
