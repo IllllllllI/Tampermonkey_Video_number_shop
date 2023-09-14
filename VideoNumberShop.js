@@ -15,14 +15,56 @@
 
 (() => {
     "use strict";
+
+    var btn_all
+    var input_id
+
     //模拟键盘输入
     function simulateKeyboardInput(element, text) {
         let event = new Event('input', { bubbles: true });
         element.value = text;
         element.dispatchEvent(event);
     }
-    var btn_all
-    var input_id
+
+    function inventory_click(number) {
+        // 定义一个定时器
+        let bo = true;
+        let btn_t = setInterval(function () {
+            if (document.readyState === 'complete' && input_id.value === document.querySelectorAll('.flex')[10].children[0].textContent) {
+                if (bo) {
+                    document.querySelector('.icon_img').click()
+                    bo = false;
+                }
+                setTimeout(function () {
+                    let temp_text = document.querySelector('.item-basic-spu').innerText
+                    if (temp_text.slice(temp_text.indexOf('-') - 14, temp_text.indexOf('-')) === input_id.value) {
+                        let input_inventory_all = document.querySelectorAll('.weui-desktop-form__input')
+                        setTimeout(function () {
+                            document.querySelectorAll('#app .weui-desktop-tooltip.weui-desktop-tooltip__up-left')[1].click()
+                            simulateKeyboardInput(input_inventory_all[0], number)
+                            if (document.readyState === 'complete') {
+                                setTimeout(function () {
+                                    document.querySelectorAll('#app .weui-desktop-btn.weui-desktop-btn_default')[1].click()
+                                }, 300);
+                                setTimeout(function () {
+                                    let btn_all_all = document.querySelectorAll('#app .weui-desktop-btn.weui-desktop-btn_primary')
+                                    btn_all_all[1].click();
+                                    btn_all_all[2].click();
+                                }, 400);
+                            }
+
+                        }, 100);
+                        //停止定时器
+                        clearInterval(btn_t)
+                    }
+                }, 100);
+
+
+            }
+        }, 200);
+    }
+
+
     function main(number) {
         // 在这里选择你要操作的input元素
         input_id = document.querySelector('.ignore_default_input') // 请替换为你的input的ID
@@ -52,38 +94,7 @@
             }
         }, 200);
 
-        // 定义一个定时器
-        let bo = true;
-        let btn_t = setInterval(function () {
-            if (document.readyState === 'complete' && input_id.value === document.querySelectorAll('.flex')[10].children[0].textContent) {
-                if (bo) {
-                    document.querySelector('.icon_img').click()
-                    bo = false;
-                }
-                let temp_text = document.querySelector('.item-basic-spu').innerText
-                if (temp_text.slice(temp_text.indexOf('-') - 14, temp_text.indexOf('-')) === input_id.value) {
-                    let input_inventory_all = document.querySelectorAll('.weui-desktop-form__input')
-                    setTimeout(function () {
-                        document.querySelectorAll('#app .weui-desktop-tooltip.weui-desktop-tooltip__up-left')[1].click()
-                        simulateKeyboardInput(input_inventory_all[0], number)
-                        if (document.readyState === 'complete') {
-                            setTimeout(function () {
-                                document.querySelectorAll('#app .weui-desktop-btn.weui-desktop-btn_default')[1].click()
-                            }, 300);
-                            setTimeout(function () {
-                                let btn_all_all = document.querySelectorAll('#app .weui-desktop-btn.weui-desktop-btn_primary')
-                                btn_all_all[1].click();
-                                btn_all_all[2].click();
-                            }, 400);
-                        }
-
-                    }, 100);
-                    //停止定时器
-                    clearInterval(btn_t)
-                }
-
-            }
-        }, 200);
+        inventory_click(number)
     }
 
 
