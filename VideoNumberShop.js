@@ -2,7 +2,7 @@
 // @name         视频号小店
 // @name:zh-CN   视频号小店
 // @namespace    https://greasyfork.org/zh-CN/scripts
-// @version      1.6
+// @version      1.6.1
 // @description  快捷添加库存
 // @author       僵尸先生
 // @match        https://channels.weixin.qq.com/*
@@ -96,7 +96,7 @@
         }, 200);
     }
 
-    function check_inventory(number){
+    function check_inventory(number) {
         let con = setInterval(function () {
             if (document.readyState === 'complete') {
                 btn_all[0].click()
@@ -160,8 +160,6 @@
                         textBox_line.style[styleName] = sourceStyles.getPropertyValue(styleName);
                     }
 
-
-
                     let textBox_text_left = document.createElement("div")
                     textBox_text_left.innerHTML = '库存'
                     sourceControl = document.querySelector('.form_item_content_left')
@@ -179,10 +177,8 @@
                         textBox_text_right.style[styleName] = sourceStyles.getPropertyValue(styleName);
                     }
 
-                    document.querySelector('.ignore_default_input').select()
                     textBox = document.createElement("input")
-                    textBox.name = 'inventory_text'
-                    textBox.type = 'text'
+                    
                     //textBox.placeholder = '自定义库存'
                     sourceControl = document.querySelector('.ignore_default_input')
                     sourceStyles = window.getComputedStyle(sourceControl)
@@ -190,6 +186,19 @@
                         let styleName = sourceStyles[i];
                         textBox.style[styleName] = sourceStyles.getPropertyValue(styleName);
                     }
+
+                    textBox.name = 'inventory_text'
+                    textBox.type = 'text'
+                    textBox.placeholder = '自定义库存'
+                    textBox.style.opacity = '0.33'
+
+                    textBox.addEventListener("click", function () {
+                        inventory_div.style.borderColor = "red"
+                    });
+
+                    textBox.addEventListener("blur", function () {
+                        inventory_div.style.borderColor = ''
+                    });
 
 
                     textBox_text_right.appendChild(textBox)
@@ -201,6 +210,7 @@
 
                     // 将文本框添加到页面中的某个元素中
                     container.insertBefore(inventory_div, container.firstChild);
+
 
                 }
 
@@ -215,13 +225,13 @@
                     }
                 })
             }
-            if(event.key !== 'Insert') {
+            if (event.key !== 'Insert') {
                 main(number)
                 check_inventory(number)
             }
 
-            
-            
+
+
 
         }
     })
