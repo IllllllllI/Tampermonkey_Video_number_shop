@@ -2,7 +2,7 @@
 // @name         视频号小店
 // @name:zh-CN   视频号小店
 // @namespace    https://greasyfork.org/zh-CN/scripts
-// @version      1.6.1
+// @version      1.6.2
 // @description  快捷添加库存
 // @author       僵尸先生
 // @match        https://channels.weixin.qq.com/*
@@ -193,7 +193,7 @@
                     textBox.style.opacity = '0.33'
 
                     textBox.addEventListener("click", function () {
-                        inventory_div.style.borderColor = "red"
+                        inventory_div.style.borderColor = "#FF6146"
                     });
 
                     textBox.addEventListener("blur", function () {
