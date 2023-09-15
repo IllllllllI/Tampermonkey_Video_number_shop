@@ -2,7 +2,7 @@
 // @name         视频号小店
 // @name:zh-CN   视频号小店
 // @namespace    https://greasyfork.org/zh-CN/scripts
-// @version      1.6.2
+// @version      1.6.3
 // @description  快捷添加库存
 // @author       僵尸先生
 // @match        https://channels.weixin.qq.com/*
@@ -178,7 +178,7 @@
                     }
 
                     textBox = document.createElement("input")
-                    
+
                     //textBox.placeholder = '自定义库存'
                     sourceControl = document.querySelector('.ignore_default_input')
                     sourceStyles = window.getComputedStyle(sourceControl)
@@ -200,6 +200,13 @@
                         inventory_div.style.borderColor = ''
                     });
 
+                    textBox.addEventListener("input", function () {
+                        if (textBox.value.trim() === "") {
+                            textBox.style.opacity = "0.33";
+                        } else {
+                            textBox.style.opacity = "1";
+                        }
+                    });
 
                     textBox_text_right.appendChild(textBox)
 
