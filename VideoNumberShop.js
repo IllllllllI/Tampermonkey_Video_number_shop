@@ -2,7 +2,7 @@
 // @name         视频号小店
 // @name:zh-CN   视频号小店
 // @namespace    https://greasyfork.org/zh-CN/scripts
-// @version      1.5.2
+// @version      1.6
 // @description  快捷添加库存
 // @author       僵尸先生
 // @match        https://channels.weixin.qq.com/*
@@ -91,10 +91,27 @@
                 btn_all[0].click();
                 // 停止定时器
                 clearInterval(input_timer);
+                inventory_click(number)
             }
         }, 200);
+    }
 
-        inventory_click(number)
+    function check_inventory(number){
+        let con = setInterval(function () {
+            if (document.readyState === 'complete') {
+                btn_all[0].click()
+                setTimeout(function () {
+                    if (document.readyState === 'complete') {
+                        let temp = document.querySelectorAll('.goods_price.WeChatSansStdRegular')[1].innerText
+                        if (number !== parseInt(temp)) {
+                            main(number)
+                        }
+                    }
+                }, 500);
+                clearInterval(con);
+            }
+
+        }, 2300);
     }
 
 
@@ -107,10 +124,10 @@
             setTimeout(function () {
                 open(document.getElementsByName('goods')[0].appUrl)
             }, 100)
-            
+
 
         }
-        else if ((event.ctrlKey && event.keyCode >= 96 && event.keyCode <= 105) || (event.altKey && event.keyCode >= 96 && event.keyCode <= 105)) {
+        else if ((event.ctrlKey && event.keyCode >= 96 && event.keyCode <= 105) || (event.altKey && event.keyCode >= 96 && event.keyCode <= 105) || event.key === 'Insert') {
             let number = null
             if (event.ctrlKey) {
                 number = event.keyCode - 96
@@ -118,27 +135,93 @@
             else if (event.altKey && event.keyCode === 96) {
                 number = 100
             }
-            else {
+            else if (event.altKey) {
                 number = (event.keyCode - 96) * 10
             }
+            else if (event.key === 'Insert') {
+                let textBox
+                let container = document.querySelectorAll('.flex')[0]
+                if (container.firstChild.childNodes[2].childNodes[0].name !== 'inventory_text') {
 
-            main(number)
+                    let inventory_div = document.createElement("div")
+                    let sourceControl = document.querySelector('.form_item_content ')
+                    let sourceStyles = window.getComputedStyle(sourceControl)
+                    // 将源控件的计算样式应用到目标控件
+                    for (let i = 0; i < sourceStyles.length; i++) {
+                        let styleName = sourceStyles[i];
+                        inventory_div.style[styleName] = sourceStyles.getPropertyValue(styleName);
+                    }
 
-            let con = setInterval(function () {
-                if (document.readyState === 'complete') {
-                    btn_all[0].click()
-                    setTimeout(function () {
-                        if (document.readyState === 'complete') {
-                            let temp = document.querySelectorAll('.goods_price.WeChatSansStdRegular')[1].innerText
-                            if (number !== parseInt(temp)) {
-                                main(number)
-                            }
-                        }
-                    }, 500);
-                    clearInterval(con);
+                    let textBox_line = document.createElement("div")
+                    sourceControl = document.querySelector('.form_item_content_line')
+                    sourceStyles = window.getComputedStyle(sourceControl)
+                    for (let i = 0; i < sourceStyles.length; i++) {
+                        let styleName = sourceStyles[i];
+                        textBox_line.style[styleName] = sourceStyles.getPropertyValue(styleName);
+                    }
+
+
+
+                    let textBox_text_left = document.createElement("div")
+                    textBox_text_left.innerHTML = '库存'
+                    sourceControl = document.querySelector('.form_item_content_left')
+                    sourceStyles = window.getComputedStyle(sourceControl)
+                    for (let i = 0; i < sourceStyles.length; i++) {
+                        let styleName = sourceStyles[i];
+                        textBox_text_left.style[styleName] = sourceStyles.getPropertyValue(styleName);
+                    }
+
+                    let textBox_text_right = document.createElement("div")
+                    sourceControl = document.querySelector('.form_item_content_right')
+                    sourceStyles = window.getComputedStyle(sourceControl)
+                    for (let i = 0; i < sourceStyles.length; i++) {
+                        let styleName = sourceStyles[i];
+                        textBox_text_right.style[styleName] = sourceStyles.getPropertyValue(styleName);
+                    }
+
+                    document.querySelector('.ignore_default_input').select()
+                    textBox = document.createElement("input")
+                    textBox.name = 'inventory_text'
+                    textBox.type = 'text'
+                    //textBox.placeholder = '自定义库存'
+                    sourceControl = document.querySelector('.ignore_default_input')
+                    sourceStyles = window.getComputedStyle(sourceControl)
+                    for (let i = 0; i < sourceStyles.length; i++) {
+                        let styleName = sourceStyles[i];
+                        textBox.style[styleName] = sourceStyles.getPropertyValue(styleName);
+                    }
+
+
+                    textBox_text_right.appendChild(textBox)
+
+                    inventory_div.appendChild(textBox_text_left)
+                    inventory_div.appendChild(textBox_line)
+                    inventory_div.appendChild(textBox_text_right)
+
+
+                    // 将文本框添加到页面中的某个元素中
+                    container.insertBefore(inventory_div, container.firstChild);
+
                 }
 
-            }, 2300);
+                // 监听文本框的键盘按下事件
+                textBox.addEventListener("keydown", function (event) {
+                    // 检查按下的键是否是回车键
+                    if (event.keyCode === 13) {
+                        // 用户按下了回车键
+                        number = parseInt(textBox.value)
+                        main(number)
+                        check_inventory(number)
+                    }
+                })
+            }
+            if(event.key !== 'Insert') {
+                main(number)
+                check_inventory(number)
+            }
+
+            
+            
 
         }
     })
